@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<h1 class="my-con1">Page de connexion</h1>{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static '/CSS/login.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    {% if message %}
+    {{ message }}
+    {% endif %}
+    <div class="form-group">
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                    {{ field.errors }}
+                    <label>{{ field.label_tag }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Se connecter">
+        </form>
+        <h2 class="my-href">
+            <a href="/FirstApp/register" >Retour à la page d'inscription</a>
+        </h2>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<h1 class="my-con1">Page d'informations utilisateur</h1>{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static '/CSS/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+
+        <h2 class="title-style">Informations de {{ user.username }}</h2>
+{#        <ul class="b1">#}
+{#            <li>Email: {{ user.email }}</li>#}
+{#        </ul>#}
+        <h5 class="b1">Email: {{ user.email }}</h5>
+
+
+        <h2 class="title-style">
+            {% if user.is_authenticated %}
+{#                <a href="{% url 'FirstApp:profile_update' user.id %}" class="m1">Edit</a>#}
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Modifier</button>
+            {% endif %}
+        </h2>
+
+        <h2 class="title-style">
+            {% if user.is_authenticated %}
+                <a href="{% url 'FirstApp:logout'%}" class="m2">Se déconnecter</a>
+            {% endif %}
+        </h2>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier mes informations</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <div class="form-wrapper">
+                  <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            <label>{{ field.label_tag }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="button-wrapper submit">
+{#                        <input type="submit" value="Update">#}
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                  </form>
+{#                    <label for="lastname" class="col-sm-3 control-label">Email</label>#}
+{#                    <input type="text" class="form-control" placeholder="Enter your new email">#}
+              </div>
+              </div>
+{#              <div class="modal-footer">#}
+{#                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+{#                <button type="submit" class="btn btn-primary">Save changes</button>#}
+{#              </div>#}
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

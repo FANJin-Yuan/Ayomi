@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <h1 class="my-con1">Page d'inscription</h1>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static '/CSS/registration.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="body">
+    <h2 class="title-style">Inscription</h2>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="b1">
+                {{ field.errors }}
+                <label>{{ field.label_tag }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+             </div>
+        {% endfor %}
+            <input type="submit" value="S'inscrire">
+    </form>
+</div>
+{% endblock %}
